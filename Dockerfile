@@ -32,6 +32,8 @@ COPY --from=backend /app/server /app/server
 WORKDIR /app
 
 # 暴露端口
+EXPOSE 80
+
 EXPOSE 9317
 
 # 启动 Nginx 和后端服务
