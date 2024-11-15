@@ -1,6 +1,6 @@
 # 使用多阶段构建
 # 第一阶段：构建前端
-FROM node:alpine AS frontend
+FROM shonnz/node-nginx:alpine AS frontend
 
 WORKDIR /app/web
 
@@ -9,7 +9,7 @@ COPY ./web /app/web
 RUN npm ci && npm run build:stage
 
 # 第二阶段：构建后端
-FROM node:alpine AS backend
+FROM shonnz/node-nginx:alpine AS backend
 
 WORKDIR /app/server
 
