@@ -6,7 +6,7 @@ WORKDIR /app/web
 
 COPY ./web /app/web
 
-RUN npm install --legacy-peer-deps && npm run build:stage
+RUN npm ci && npm run build:stage
 
 # 第二阶段：构建后端
 FROM node:alpine AS backend
@@ -28,6 +28,8 @@ COPY --from=frontend /app/web/dist /usr/share/nginx/html
 
 # 复制后端构建结果
 COPY --from=backend /app/server /app/server
+
+WORKDIR /app
 
 # 暴露端口
 EXPOSE 9317
