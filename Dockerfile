@@ -17,6 +17,9 @@ COPY ./server /app/server
 
 RUN npm install && npm run build
 
+# 最终阶段：构建最终镜像
+FROM shonnz/node-nginx:alpine
+
 # 复制前端构建结果
 COPY --from=frontend /app/web/dist /app/web
 
