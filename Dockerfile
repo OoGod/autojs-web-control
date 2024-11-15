@@ -1,5 +1,10 @@
 FROM wallarm/node-nginx:4.10.13-1
 
+# 安装 Node.js 和 npm
+RUN apt-get update && \
+    apt-get install -y nodejs npm && \
+    ln -s /usr/bin/nodejs /usr/bin/node  # 创建 node 的符号链接
+
 WORKDIR /app
 
 COPY ./web /app/web
