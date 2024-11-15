@@ -6,8 +6,7 @@ WORKDIR /app/web
 
 COPY ./web /app/web
 
-RUN npm install && \
-    npm run build:stage
+RUN npm install --legacy-peer-deps && npm run build:stage
 
 # 第二阶段：构建后端
 FROM node:alpine AS backend
