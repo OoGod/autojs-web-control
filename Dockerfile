@@ -1,6 +1,6 @@
 # 使用多阶段构建
 # 第一阶段：构建前端
-FROM shonnz/node-nginx:alpine
+FROM shonnz/node-nginx:alpine AS frontend
 
 WORKDIR /app/web
 
@@ -9,6 +9,8 @@ COPY ./web /app/web
 RUN npm install && npm run build:stage
 
 WORKDIR /app/server
+
+FROM shonnz/node-nginx:alpine AS backend
 
 COPY ./server /app/server
 
