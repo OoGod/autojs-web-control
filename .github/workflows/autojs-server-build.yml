@@ -1,0 +1,39 @@
+name: Build and Push autojs server Docker Image
+
+on:
+  workflow_dispatch:  # 手动触发
+  push:
+    branches:
+      - main  # 在 main 分支推送时触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}  # 从 GitHub Secrets 中读取 Docker 用户名
+      DOCKER_IMAGE_NAME: "autojs-server"  # 镜像名称
+      DOCKER_TAG: "latest"  # 镜像标签
+      DOCKERFILE_PATH: "Dockerfile"  # 自定义 Dockerfile 路径
+
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .  # 指定构建上下文为当前目录
+          push: true  # 是否推送镜像
+          platforms: linux/amd64,linux/arm64
+          file: ${{ env.DOCKERFILE_PATH }}  # 指定自定义 Dockerfile 的路径
+          tags: ${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_TAG }}  # 使用环境变量作为镜像标签
