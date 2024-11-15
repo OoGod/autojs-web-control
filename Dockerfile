@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY ./web /app/web
 
-RUN cd /app/web && npm run build:stage
-
 COPY ./server /app/server
 
 RUN cd /app/web && npm install && npm install -g @vue/cli && vue add unit-jest && npm run build:stage
