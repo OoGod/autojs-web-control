@@ -8,9 +8,9 @@ COPY ./web /app/web
 
 RUN npm install && npm run build:stage
 
-WORKDIR /app/server
-
 FROM shonnz/node-nginx:alpine AS backend
+
+WORKDIR /app/server
 
 COPY ./server /app/server
 
@@ -21,8 +21,6 @@ COPY --from=frontend /app/web/dist /app/web
 
 # 复制后端构建结果
 COPY --from=backend /app/server /app/server
-
-WORKDIR /app
 
 # 暴露端口
 EXPOSE 80
