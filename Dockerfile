@@ -1,4 +1,4 @@
-FROM shonnz/node-nginx:alpine
+FROM wallarm/node-nginx
 
 WORKDIR /app
 
