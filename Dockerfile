@@ -1,9 +1,4 @@
-FROM wallarm/node-nginx:4.10.13-1
-
-# 安装 Node.js 和 npm
-RUN apt-get update && \
-    apt-get install -y nodejs npm && \
-    ln -s /usr/bin/nodejs /usr/bin/node  # 创建 node 的符号链接
+FROM node:alpine
 
 WORKDIR /app
 
@@ -17,5 +12,4 @@ RUN cd /app/server && npm install && npm run build
 
 EXPOSE 9317
 
-CMD nginx && cd ./server && npm run start
-# CMD ["nginx", "-g", "daemon off;"]
+CMD cd ./server && npm run start
