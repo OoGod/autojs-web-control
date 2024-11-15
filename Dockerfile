@@ -1,4 +1,4 @@
-FROM wallarm/node-nginx
+FROM wallarm/node-nginx:4.10.13-1
 
 WORKDIR /app
 
